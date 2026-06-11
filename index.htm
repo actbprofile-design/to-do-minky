@@ -10,7 +10,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
-    <style>
+  <style>
         :root {
             --primary-color: #4a90e2; --bg-color: #f1f5f9; --card-bg: #ffffff;
             --border-color: #e2e8f0; --text-color: #1e293b; --hover-bg: #f8fafc;
@@ -104,24 +104,35 @@
         .file-list { list-style: none; padding: 0; margin: 0 0 15px 0; max-height: 100px; overflow-y: auto;}
         .file-list li { display: flex; justify-content: space-between; align-items: center; background: var(--hover-bg); padding: 6px 10px; border-radius: 4px; margin-bottom: 4px; font-size: 11px;}
 
-        /* 모바일 앱 전용 UI 맞춤 */
+        /* 모바일 앱 전용 UI 맞춤 (완전 개편) */
         @media screen and (max-width: 1024px) {
-            body { padding: env(safe-area-inset-top) 10px env(safe-area-inset-bottom) 10px; }
-            .dashboard-layout { flex-direction: column; gap: 12px; }
-            #col-left, #col-center, #col-right { width: 100%; }
-            .card { border-radius: 20px; border: none; box-shadow: 0 6px 16px rgba(0,0,0,0.08); margin-bottom: 5px; }
-            .card-header { padding: 16px 20px; font-size: 1.1rem; }
-            input[type="text"], input[type="number"], select, button { padding: 14px; font-size: 16px; border-radius: 12px; }
-            .todo-item { padding: 12px 14px; border-radius: 12px; margin-bottom: 10px; }
+            body { padding: env(safe-area-inset-top) 15px env(safe-area-inset-bottom) 15px; }
+            .dashboard-layout { flex-direction: column; gap: 15px; }
+            #col-left, #col-center, #col-right { width: 100%; min-width: auto; }
+            
+            .card { border-radius: 20px; border: none; box-shadow: 0 6px 16px rgba(0,0,0,0.08); margin-bottom: 10px; }
+            .card-header { padding: 18px 20px; font-size: 1.2rem; }
+            
+            .input-group { flex-wrap: wrap; gap: 8px; }
+            .input-group input[type="text"] { width: 100%; flex: none; padding: 16px; font-size: 16px; border-radius: 12px; }
+            .input-group select, .input-group button, .input-group input[type="number"] { flex: 1; padding: 14px; font-size: 16px; border-radius: 12px; }
+            .input-group input[type="color"] { width: 45px; height: 45px; flex: none; border-radius: 10px; }
+            
+            .todo-item { padding: 16px; border-radius: 14px; margin-bottom: 10px; }
             .todo-text { font-size: 16px; }
-            .icon-btn { font-size: 20px; padding: 8px; }
-            .top-nav { flex-direction: column; padding: 15px; border-radius: 16px; margin-top: 10px; }
-            #main-title { font-size: 1.4rem; }
-            .circular-planner-wrapper { flex-direction: column; }
-            .planner-legend { width: 100%; max-height: 250px; }
-            .calendar-grid { overflow-x: auto; padding-bottom: 5px; }
-            .calendar-day { min-height: 90px; }
-            .day-num { font-size: 14px; }
+            .icon-btn { font-size: 22px; padding: 10px; }
+            
+            .top-nav { flex-direction: column; padding: 20px; border-radius: 20px; margin-top: 10px; gap: 15px; }
+            #main-title { font-size: 1.5rem; }
+            
+            .timer-container { padding-bottom: 20px; }
+            .visual-timer { margin: 25px auto; width: 180px; height: 180px; }
+            
+            .circular-planner-wrapper { flex-direction: column; padding: 10px 0; }
+            .planner-legend { width: 100%; max-height: 250px; margin-top: 15px; }
+            .calendar-grid { overflow-x: auto; padding-bottom: 10px; }
+            .calendar-day { min-height: 100px; }
+            .day-num { font-size: 14px; padding: 4px 8px; }
         }
     </style>
 </head>
