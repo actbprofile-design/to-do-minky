@@ -1,0 +1,15 @@
+{
+  "name": "to do minky",
+  "short_name": "to do minky",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f1f5f9",
+  "theme_color": "#4a90e2",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3203/3203071.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
