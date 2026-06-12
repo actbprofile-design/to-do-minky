@@ -105,19 +105,28 @@
         .file-list li { display: flex; justify-content: space-between; align-items: center; background: var(--hover-bg); padding: 6px 10px; border-radius: 4px; margin-bottom: 4px; font-size: 11px;}
 
         /* ========================================= */
-        /* 📱 모바일 앱 전용 (UI, 글씨크기, 핏 맞춤 수정) */
+        /* 📱 모바일 앱 전용 (UI, 글씨크기, 완벽 스크롤 핏 맞춤 수정) */
         /* ========================================= */
         @media screen and (max-width: 1024px) {
-            body { padding: 0; background-color: #f1f5f9; height: 100vh; overflow: hidden; }
+            /* body의 높이를 최신 기기 동적 높이(dvh)로 설정하여 사파리 주소창 에러 완벽 해결 */
+            body { padding: 0; background-color: #f1f5f9; height: 100vh; height: 100dvh; overflow: hidden; }
             
             .top-nav { margin-bottom: 0; border-radius: 0; padding: 10px 15px; box-shadow: none; border-bottom: 1px solid var(--border-color); background: white; }
             #main-title { font-size: 1.1rem; }
             .backup-tools .btn-backup, .backup-tools .btn-restore { padding: 6px 10px; font-size: 10px; }
 
-            .dashboard-layout { display: block; height: calc(100vh - 130px); padding: 10px; overflow: hidden; }
-            .column { display: none; width: 100% !important; height: 100%; gap: 10px; }
+            /* 💡 스크롤 핵심 해결 구간 💡 */
+            .dashboard-layout { 
+                display: block; 
+                height: calc(100dvh - 120px); /* 전체 화면에서 상단/하단 메뉴 크기 제외 */
+                padding: 10px 10px 100px 10px; /* 맨 아래 100px 여백으로 탭에 가려짐 완전 방지 */
+                overflow-y: auto; /* 자연스러운 상하 스크롤 허용 */
+                -webkit-overflow-scrolling: touch; /* 아이폰 특유의 부드러운 터치 스크롤 활성화 */
+            }
+            .column { display: none; width: 100% !important; height: auto; gap: 10px; }
             
-            .column.active-tab { display: flex; flex-direction: column; animation: fadeIn 0.2s ease; overflow-y: auto;}
+            /* 높이를 auto로 풀어서 달력과 시간표가 내용만큼 늘어날 수 있게 함 */
+            .column.active-tab { display: flex; flex-direction: column; height: auto; animation: fadeIn 0.2s ease; overflow: visible; }
             @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
             /* 1. 할일 탭 텍스트 큼직하게 유지 */
@@ -132,22 +141,21 @@
             
             #modal-details { font-size: 16px !important; padding: 15px; height: 150px; }
 
-            /* 2. 일정 탭 자연스러운 스크롤 허용 (잘림 방지 해결!) */
-            #col-center.active-tab { overflow-y: auto; justify-content: flex-start; padding-bottom: 40px; } /* 하단 여백 추가로 짤림 완전 방지 */
-            #col-center .card { flex: none; margin-bottom: 15px; display: flex; flex-direction: column; border-radius: 16px; height: auto; }
+            /* 2. 일정 탭 카드 설정 (짤림 방지) */
+            #col-center .card { flex: none; margin-bottom: 15px; display: flex; flex-direction: column; border-radius: 16px; height: auto !important; overflow: visible !important; }
             #col-center .card-header { padding: 12px 15px; font-size: 1.1rem; }
-            #col-center .card-body { overflow: visible; padding: 10px 15px; }
+            #col-center .card-body { overflow: visible !important; padding: 10px 15px; }
             
             .circular-planner-wrapper { flex-direction: column; padding: 5px 0; }
-            .circular-svg-container { width: 170px; height: 170px; margin: 0 auto; }
-            .planner-legend { width: 100%; max-height: 120px; margin-top: 10px; padding: 8px; overflow-y: auto;}
-            .legend-item { padding: 6px; font-size: 11px; }
+            .circular-svg-container { width: 200px; height: 200px; margin: 0 auto; }
+            .planner-legend { width: 100%; max-height: none; margin-top: 15px; padding: 8px; overflow: visible;}
+            .legend-item { padding: 8px; font-size: 12px; margin-bottom: 8px;}
             
-            .calendar-nav { margin-bottom: 5px; }
-            .calendar-grid { gap: 4px; padding-bottom: 5px; }
-            .calendar-day { min-height: 50px; border-radius: 6px; padding-top: 2px; } /* 터치하기 좋게 최소 높이 확보 */
-            .day-num { font-size: 11px; padding: 0 4px; margin-bottom: 2px; }
-            .calendar-event { font-size: 10px; padding: 2px 4px; }
+            .calendar-nav { margin-bottom: 10px; }
+            .calendar-grid { gap: 4px; padding-bottom: 10px; }
+            .calendar-day { min-height: 60px; border-radius: 6px; padding-top: 4px; } /* 터치하기 좋게 최소 높이 넉넉하게 확보 */
+            .day-num { font-size: 12px; padding: 0 4px; margin-bottom: 2px; }
+            .calendar-event { font-size: 11px; padding: 2px 4px; margin-bottom: 2px;}
 
             /* 타이머 화면 */
             .timer-container { padding-bottom: 20px; display: flex; flex-direction: column; align-items: center; }
