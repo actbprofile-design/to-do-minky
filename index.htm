@@ -10,7 +10,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
-<style>
+    <style>
         :root {
             --primary-color: #4a90e2; --bg-color: #f1f5f9; --card-bg: #ffffff;
             --border-color: #e2e8f0; --text-color: #1e293b; --hover-bg: #f8fafc;
@@ -104,10 +104,7 @@
         .file-list { list-style: none; padding: 0; margin: 0 0 15px 0; max-height: 100px; overflow-y: auto;}
         .file-list li { display: flex; justify-content: space-between; align-items: center; background: var(--hover-bg); padding: 6px 10px; border-radius: 4px; margin-bottom: 4px; font-size: 11px;}
 
-        /* ================================================================= */
-        /* 모바일 앱 전용 UI 맞춤 (버그 픽스 및 최적화 완료) */
-        /* ================================================================= */
-      /* ========================================= */
+        /* ========================================= */
         /* 📱 모바일 앱 전용: 하단 탭 메뉴 UI 레이아웃 */
         /* ========================================= */
         @media screen and (max-width: 1024px) {
@@ -143,7 +140,7 @@
                 display: flex; flex-direction: column; align-items: center; gap: 4px;
                 color: #94a3b8; font-size: 10px; font-weight: bold; cursor: pointer; transition: 0.2s;
             }
-            .tab-item i { font-size: 20px; }
+            .tab-item i { font-size: 20px; font-style: normal; }
             .tab-item.active { color: var(--primary-color); }
         }
 
@@ -151,45 +148,6 @@
         @media screen and (min-width: 1025px) {
             .mobile-tab-bar { display: none; }
         }
-
-        // [모바일 탭 전환 기능]
-        function initMobileTabs() {
-            // 하단 탭 바 HTML 추가 (모바일에서만 보임)
-            const tabBar = document.createElement('div');
-            tabBar.className = 'mobile-tab-bar';
-            tabBar.innerHTML = `
-                <div class="tab-item active" onclick="switchTab(0, this)"><i>📝</i><span>할일</span></div>
-                <div class="tab-item" onclick="switchTab(1, this)"><i>📅</i><span>일정</span></div>
-                <div class="tab-item" onclick="switchTab(2, this)"><i>🍅</i><span>타이머</span></div>
-            `;
-            document.body.appendChild(tabBar);
-            
-            // 초기 상태: 첫 번째 탭(할일)만 보이게
-            if(window.innerWidth <= 1024) {
-                switchTab(0, tabBar.querySelector('.tab-item'));
-            }
-        }
-
-        function switchTab(index, el) {
-            const columns = document.querySelectorAll('.column');
-            const tabs = document.querySelectorAll('.tab-item');
-            
-            // 모든 컬럼 숨기고 선택한 것만 표시
-            columns.forEach(col => col.classList.remove('active-tab'));
-            columns[index].classList.add('active-tab');
-            
-            // 모든 탭 비활성화하고 선택한 것만 활성화
-            tabs.forEach(tab => tab.classList.remove('active'));
-            el.classList.add('active');
-            
-            // 화면 맨 위로 스크롤
-            document.getElementById('dashboard').scrollTop = 0;
-        }
-
-        // 앱 시작 시 탭 초기화 실행
-        initMobileTabs();
-    </style>
-    
     </style>
 </head>
 <body>
@@ -602,6 +560,43 @@
         
         document.getElementById('prev-month').addEventListener('click', () => { currentMonth--; if(currentMonth<0){currentMonth=11;currentYear--;} updateApp(); });
         document.getElementById('next-month').addEventListener('click', () => { currentMonth++; if(currentMonth>11){currentMonth=0;currentYear++;} updateApp(); });
+
+        // [모바일 탭 전환 기능]
+        function initMobileTabs() {
+            // 하단 탭 바 HTML 추가 (모바일에서만 보임)
+            const tabBar = document.createElement('div');
+            tabBar.className = 'mobile-tab-bar';
+            tabBar.innerHTML = `
+                <div class="tab-item active" onclick="switchTab(0, this)"><i>📝</i><span>할일</span></div>
+                <div class="tab-item" onclick="switchTab(1, this)"><i>📅</i><span>일정</span></div>
+                <div class="tab-item" onclick="switchTab(2, this)"><i>🍅</i><span>타이머</span></div>
+            `;
+            document.body.appendChild(tabBar);
+            
+            // 초기 상태: 첫 번째 탭(할일)만 보이게
+            if(window.innerWidth <= 1024) {
+                switchTab(0, tabBar.querySelector('.tab-item'));
+            }
+        }
+
+        function switchTab(index, el) {
+            const columns = document.querySelectorAll('.column');
+            const tabs = document.querySelectorAll('.tab-item');
+            
+            // 모든 컬럼 숨기고 선택한 것만 표시
+            columns.forEach(col => col.classList.remove('active-tab'));
+            if(columns[index]) columns[index].classList.add('active-tab');
+            
+            // 모든 탭 비활성화하고 선택한 것만 활성화
+            tabs.forEach(tab => tab.classList.remove('active'));
+            if(el) el.classList.add('active');
+            
+            // 화면 맨 위로 스크롤
+            document.getElementById('dashboard').scrollTop = 0;
+        }
+
+        // 앱 시작 시 탭 초기화 실행
+        initMobileTabs();
 
         // 시작
         loadData();
